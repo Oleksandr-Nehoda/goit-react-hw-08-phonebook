@@ -16,9 +16,10 @@ export class App extends Component {
   };
 
   addContact = contact => {
-    console.log(contact);
     contact.id = nanoid(10);
-    console.log(contact);
+    if (this.state.contacts.find(cont => cont.name === contact.name)) {
+      return alert(`${contact.name} is already is contacts`);
+    }
     this.setState(prevState => ({
       contacts: [contact, ...prevState.contacts],
     }));
@@ -28,7 +29,15 @@ export class App extends Component {
     this.setState({ filter: event.currentTarget.value });
   };
 
+  filterName = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   render() {
+    this.filterName();
     const { filter } = this.state;
     return (
       <div>
@@ -36,7 +45,7 @@ export class App extends Component {
         <Form onSubmit={this.addContact} />
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.onChange} />
-        <ContactList contacts={this.state.contacts} />
+        <ContactList contacts={this.filterName()} />
       </div>
     );
   }
