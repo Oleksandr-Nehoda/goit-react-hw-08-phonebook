@@ -3,25 +3,22 @@ import { Form } from './Form/Form';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid';
+import css from './App.module.css';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
-  addContact = contact => {
-    contact.id = nanoid(10);
-    if (this.state.contacts.find(cont => cont.name === contact.name)) {
-      return alert(`${contact.name} is already is contacts`);
+  addContact = addContact => {
+    const { contacts } = this.state;
+    addContact.id = nanoid(10);
+    if (contacts.find(contact => contact.name === addContact.name)) {
+      return alert(`${addContact.name} is already is contacts`);
     }
     this.setState(prevState => ({
-      contacts: [contact, ...prevState.contacts],
+      contacts: [addContact, ...prevState.contacts],
     }));
   };
 
@@ -36,16 +33,25 @@ export class App extends Component {
     );
   };
 
+  deleteContact = idCont => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== idCont),
+    }));
+  };
+
   render() {
     this.filterName();
     const { filter } = this.state;
     return (
       <div>
-        <h1>Phonebook</h1>
+        <h1 className={css.title}>Phonebook</h1>
         <Form onSubmit={this.addContact} />
-        <h2>Contacts</h2>
+        <h2 className={css.contact_title}>Contacts</h2>
         <Filter value={filter} onChange={this.onChange} />
-        <ContactList contacts={this.filterName()} />
+        <ContactList
+          contacts={this.filterName()}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
