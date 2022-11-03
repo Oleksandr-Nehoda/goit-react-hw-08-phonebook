@@ -40,7 +40,6 @@ export class App extends Component {
   };
 
   render() {
-    this.filterName();
     const { filter } = this.state;
     return (
       <div>
