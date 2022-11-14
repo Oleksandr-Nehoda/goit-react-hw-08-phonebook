@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form } from './Form/Form';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -10,20 +10,15 @@ export const App = () => {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
 
+useEffect(() => {
+  const getLocStorageContacts = JSON.parse(localStorage.getItem('contacts'));
+  if (getLocStorageContacts && getLocStorageContacts.length !== 0) {
+    setContacts(getLocStorageContacts);
+  } }, []);
 
-
-  // componentDidMount() {
-  //   const getLocStorageContacts = JSON.parse(localStorage.getItem('contacts'));
-  //   if (getLocStorageContacts && getLocStorageContacts.length !== 0) {
-  //     this.setState({ contacts: getLocStorageContacts });
-  //   }
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (this.state.contacts !== prevState.contacts) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
    const addContact = addContact => {
     addContact.id = nanoid(10);
