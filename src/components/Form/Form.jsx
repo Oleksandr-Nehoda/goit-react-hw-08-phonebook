@@ -13,7 +13,7 @@ export function Form ({onSubmit}) {
       break;
       case 'number' : setNumber(value);
       break;
-      default: '';
+      default: console.log("Invalid data type");
     }
   };
 
