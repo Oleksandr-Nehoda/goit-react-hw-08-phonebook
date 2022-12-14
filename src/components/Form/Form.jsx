@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import css from './Form.module.css';
+import { useDispatch} from 'react-redux';
+import {addMyContact } from '../../redux/sliceContacts';
+
 
 export function Form ({onSubmit}) {
 
@@ -17,9 +20,16 @@ export function Form ({onSubmit}) {
     }
   };
 
+  const dispatch = useDispatch();
+
+  const addContact = () => {
+dispatch(addMyContact({name, number}));
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
-    onSubmit({name, number});
+    addContact();
+    // onSubmit({name, number});
     reset();
   };
 

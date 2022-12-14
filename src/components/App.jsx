@@ -6,8 +6,8 @@ import { nanoid } from 'nanoid';
 import {useLocalStorage} from '../hooks/useLocalStorage';
 import css from './App.module.css';
 
-import {useSelector, useDispatch} from 'react-redux';
-import {increment, decrement} from '../redux/store';
+// import {useSelector, useDispatch} from 'react-redux';
+// import {increment, decrement} from '../redux/store';
 
 
 export const App = () => {
@@ -42,16 +42,16 @@ export const App = () => {
 
 // Тренувальний код
 
-const value = useSelector( state => state.myValue);
-const dispatch = useDispatch();
+// const value = useSelector( state => state.myValue);
+// const dispatch = useDispatch();
 
     return (
       <div>
-        <div>
+        {/* <div>
           <button onClick={() => dispatch(increment(20))}>increment</button>
           <button onClick={() => dispatch(decrement(30))}>decrement</button>
           <span>{value}</span>
-        </div>
+        </div> */}
         <h1 className={css.title}>Phonebook</h1>
         <Form onSubmit={addContact} />
         <h2 className={css.contact_title}>Contacts</h2>

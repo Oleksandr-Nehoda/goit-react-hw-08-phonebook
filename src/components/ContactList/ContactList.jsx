@@ -1,7 +1,24 @@
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteMyContact, getContacts } from '../../redux/sliceContacts';
 
-export const ContactList = ({ contacts, onDeleteContact }) => {
+
+
+export const ContactList = () => {
+
+  const dispatch = useDispatch();
+  // Redux отримуєм з сховища дані
+  const contacts = useSelector(getContacts);
+  console.log(contacts)
+  // const filter = useSelector(getFilter);
+
+  // Ф-ція видалення
+  const deleteContact = idContact => {
+    dispatch(deleteMyContact(idContact));
+  };
+
+
   return (
     <div className={css.list_box}>
       <ul>
@@ -14,7 +31,7 @@ export const ContactList = ({ contacts, onDeleteContact }) => {
               <button
                 className={css.btn_delete_contact}
                 type="button"
-                onClick={() => onDeleteContact(id)}
+                onClick={() => deleteContact(id)}
               >
                 Delete
               </button>
