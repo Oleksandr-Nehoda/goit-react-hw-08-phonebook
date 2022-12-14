@@ -23,8 +23,9 @@ const contactsSlice  = createSlice({
 // Генератори екшенів
 export const { addMyContact, deleteMyContact } = contactsSlice.actions;
 
+// Селектор
+export const getContacts = state => state.contacts;
+
 // Редюсер слайсу
 export const contactsReducer = contactsSlice.reducer;
 
-// Селектор
-export const getContacts = state => state.contacts;

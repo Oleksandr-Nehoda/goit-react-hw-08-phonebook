@@ -1,7 +1,23 @@
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { contactsFilter, getFilter } from '../../redux/sliceFilter';
+
+
 
 export const Filter = ({ value, onChange }) => {
+
+  const dispatch = useDispatch();
+  // Redux отримуєм з сховища дані
+  const filter = useSelector(getFilter);
+  console.log(filter)
+  
+  // Ф-ція запису фільтра в стор
+  const changeFilter = (event) => {
+    dispatch(contactsFilter(event.target.value));
+  };
+
+
   return (
     <div className={css.filter_box}>
       <label>
@@ -9,8 +25,8 @@ export const Filter = ({ value, onChange }) => {
         <input
           className={css.filter_input}
           type="text"
-          value={value}
-          onChange={onChange}
+          value={filter}
+          onChange={changeFilter}
         />
       </label>
     </div>
