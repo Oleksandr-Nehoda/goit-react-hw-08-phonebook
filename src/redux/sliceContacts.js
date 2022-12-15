@@ -1,4 +1,8 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import {combineReducers, createSlice, nanoid } from "@reduxjs/toolkit";
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { filterReducer } from './sliceFilter';
+
 
 const contactsInitialState = [
     { id: nanoid(7), name: 'Oleksandr Nehoda', number: '(097)399-01-55' },
@@ -27,8 +31,27 @@ const contactsSlice  = createSlice({
 export const { addMyContact, deleteMyContact } = contactsSlice.actions;
 
 // Селектор
-export const getContacts = state => state.contacts;
+export const getContacts = state => state.contacts.contacts;
 
 // Редюсер слайсу
 export const contactsReducer = contactsSlice.reducer;
 
+
+
+const rootReducer = combineReducers({
+  contacts: contactsReducer,
+  filter: filterReducer,
+});
+
+const persistConfig = {
+  key: 'contacts',
+  storage,
+  whitelist: ['contacts'],
+};
+
+// передаємо persistConfig та contactsSlice.reducer редбюсер тієї події яку треба в
+// localstorege передати
+export const persistedContactsReducer = persistReducer(
+  persistConfig,
+  rootReducer
+);

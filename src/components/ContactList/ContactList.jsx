@@ -11,7 +11,6 @@ export const ContactList = () => {
   const dispatch = useDispatch();
   // Redux отримуєм з сховища дані
   const contacts = useSelector(getContacts);
-  console.log(contacts)
   const onFilter = useSelector(getFilter);
 
   // Ф-ція видалення
@@ -21,6 +20,7 @@ export const ContactList = () => {
 
 // Фільтр контактів
   const filterContacts = () => {
+ 
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(onFilter.toLowerCase())
     );
