@@ -5,12 +5,11 @@ import { contactsFilter, getFilter } from '../../redux/sliceFilter';
 
 
 
-export const Filter = ({ value, onChange }) => {
+export const Filter = () => {
 
   const dispatch = useDispatch();
   // Redux отримуєм з сховища дані
   const filter = useSelector(getFilter);
-  console.log(filter)
   
   // Ф-ція запису фільтра в стор
   const changeFilter = (event) => {

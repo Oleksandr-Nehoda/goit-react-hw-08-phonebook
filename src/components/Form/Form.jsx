@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import css from './Form.module.css';
+import { nanoid } from 'nanoid';
 import { useDispatch} from 'react-redux';
 import {addMyContact } from '../../redux/sliceContacts';
 
 
-export function Form ({onSubmit}) {
+export function Form () {
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -22,14 +23,14 @@ export function Form ({onSubmit}) {
 
   const dispatch = useDispatch();
 
+  // Додаємо контакт в стор
   const addContact = () => {
-dispatch(addMyContact({name, number}));
+dispatch(addMyContact({id: nanoid(7), name, number}));
   };
 
   const handleSubmit = event => {
     event.preventDefault();
     addContact();
-    // onSubmit({name, number});
     reset();
   };
 
