@@ -16,7 +16,6 @@ export const store = configureStore({
   reducer: {
     contacts: persistedContactsReducer,
     filter: filterReducer,
-    whitelist: ['contacts'],
   },
   middleware: getDefaultMiddleware =>
   getDefaultMiddleware({
