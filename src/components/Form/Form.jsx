@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import css from './Form.module.css';
 import { nanoid } from 'nanoid';
-import { useDispatch} from 'react-redux';
-import {addMyContact } from '../../redux/sliceContacts';
+import { useDispatch, useSelector} from 'react-redux';
+import {addMyContact, getContacts  } from '../../redux/sliceContacts';
 
 
 export function Form () {
@@ -22,6 +22,7 @@ export function Form () {
   };
 
   const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
 
   // Додаємо контакт в стор
   const addContact = () => {
@@ -30,6 +31,11 @@ dispatch(addMyContact({id: nanoid(7), name, number}));
 
   const handleSubmit = event => {
     event.preventDefault();
+   
+    // Перевірка на наявність такого імені в контактах
+    if (contacts.find(contact => contact.name === name)) {
+      return alert(`${name} is already is contacts`);
+    }
     addContact();
     reset();
   };
