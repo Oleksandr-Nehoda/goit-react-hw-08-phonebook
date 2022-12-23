@@ -1,45 +1,54 @@
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMyContact, getContacts } from '../../redux/sliceContacts';
+import { fetchContacts, deleteContact } from 'redux/operationsContacts';
+import { getContacts } from '../../redux/sliceContacts';
 import { getFilter } from '../../redux/sliceFilter';
-
+import { useEffect } from 'react';
 
 
 export const ContactList = () => {
 
   const dispatch = useDispatch();
-  // Redux отримуєм з сховища дані
+  
+  // Redux отримуєм з сервера дані
   const contacts = useSelector(getContacts);
+
   const onFilter = useSelector(getFilter);
 
+  useEffect(() => {
+    dispatch(fetchContacts())
+}, [dispatch])
+
   // Ф-ція видалення
-  const deleteContact = idContact => {
-    dispatch(deleteMyContact(idContact));
+  const onDeleteContact = idContact => {
+    dispatch(deleteContact(idContact));
   };
 
 // Фільтр контактів
   const filterContacts = () => {
  
-    return contacts.filter(contact =>
+    return contacts.items.filter(contact =>
       contact.name.toLowerCase().includes(onFilter.toLowerCase())
     );
   };
 
 
-  return (
+  return (<>
+    {contacts.isLoading && <b> Loading... </b>}
+    {contacts.error && <b>{contacts.error}</b>}
     <div className={css.list_box}>
       <ul>
-        {filterContacts().map(({ id, name, number }) => {
+        {filterContacts().map(({ id, number, name, phone }) => {
           return (
             <li key={id} className={css.item}>
               <p className={css.contact_name}>
-                {name} ---------- {number}
+                {name} ---------- {number || phone}
               </p>
               <button
                 className={css.btn_delete_contact}
                 type="button"
-                onClick={() => deleteContact(id)}
+                onClick={() => onDeleteContact(id)}
               >
                 Delete
               </button>
@@ -48,6 +57,7 @@ export const ContactList = () => {
         })}
       </ul>
     </div>
+    </>
   );
 };
 

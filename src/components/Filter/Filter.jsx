@@ -3,19 +3,15 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsFilter, getFilter } from '../../redux/sliceFilter';
 
-
-
 export const Filter = () => {
-
   const dispatch = useDispatch();
   // Redux отримуєм з сховища дані
   const filter = useSelector(getFilter);
-  
+
   // Ф-ція запису фільтра в стор
-  const changeFilter = (event) => {
+  const changeFilter = event => {
     dispatch(contactsFilter(event.target.value));
   };
-
 
   return (
     <div className={css.filter_box}>
