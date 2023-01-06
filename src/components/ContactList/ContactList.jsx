@@ -35,7 +35,7 @@ export const ContactList = () => {
 
 
   return (<>
-    {contacts.isLoading && <b> Loading... </b>}
+    {contacts.isLoading && <p className={css.loading}> Loading... </p>}
     {contacts.error && <b>{contacts.error}</b>}
     <div className={css.list_box}>
       <ul>

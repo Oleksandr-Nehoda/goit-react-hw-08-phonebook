@@ -27,10 +27,9 @@ useEffect(() => {
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<RestrictedRoute><Login/></RestrictedRoute>}/>
         <Route path='/contacts' element={<PrivateRoute><Contacts/></PrivateRoute>}/>
+        <Route path='*' element={<HomePage />} />
       </Route>
     </Routes>
     </>
   )
-
-
 }
