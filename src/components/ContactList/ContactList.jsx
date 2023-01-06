@@ -39,11 +39,11 @@ export const ContactList = () => {
     {contacts.error && <b>{contacts.error}</b>}
     <div className={css.list_box}>
       <ul>
-        {filterContacts().map(({ id, number, name, phone }) => {
+        {filterContacts().map(({ id, number, name }) => {
           return (
             <li key={id} className={css.item}>
               <p className={css.contact_name}>
-                {name} ---------- {number || phone}
+                {name} ---------- {number}
               </p>
               <button
                 className={css.btn_delete_contact}
