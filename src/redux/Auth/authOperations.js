@@ -14,6 +14,19 @@ const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = '';
 };
 
+export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
+  const state = thunkAPI.getState()
+  const persistToken = state.auth.token
+  if (persistToken === null)
+      return thunkAPI.rejectWithValue('Error')
+  try {
+      setAuthHeader(persistToken);
+      const res = await axios.get('/users/current')
+      return res.data;
+  } catch (error) {
+      return thunkAPI.rejectWithValue(error.message)
+  }
+});
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -47,7 +60,6 @@ export const logOut = createAsyncThunk(
  'auth/logout', async (_, thunkAPI) => {
     try {
       const res = await axios.post('/users/logout');
-      console.log(res)
       clearAuthHeader();
       return res.data;
     } catch (error) {
@@ -56,16 +68,4 @@ export const logOut = createAsyncThunk(
  }
 );
 
- export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
-    const state = thunkAPI.getState()
-    const persistToken = state.auth.token
-    if (persistToken === null)
-        return thunkAPI.rejectWithValue('Error')
-    try {
-        setAuthHeader(persistToken);
-        const res = await axios.get('/users/current')
-        return res.data;
-    } catch (error) {
-        return thunkAPI.rejectWithValue(error.message)
-    }
-});
+ 

@@ -2,8 +2,9 @@ import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts, deleteContact } from 'redux/Contacts/operationsContacts';
-import { getContacts } from '../../redux/Contacts/sliceContacts';
-import { getFilter } from '../../redux/Contacts/sliceFilter';
+import { getContacts } from 'redux/Contacts/sliceContacts';
+import { getFilter } from 'redux/Contacts/sliceFilter';
+import {selectIsLoggedIn} from 'redux/Auth/authSelectors'
 import { useEffect } from 'react';
 
 
@@ -16,9 +17,13 @@ export const ContactList = () => {
 
   const onFilter = useSelector(getFilter);
 
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   useEffect(() => {
-    dispatch(fetchContacts())
-}, [dispatch])
+    if (isLoggedIn) {
+      dispatch(fetchContacts())
+    }
+}, [dispatch, isLoggedIn])
 
   // Ф-ція видалення
   const onDeleteContact = idContact => {
@@ -32,7 +37,6 @@ export const ContactList = () => {
       contact.name.toLowerCase().includes(onFilter.toLowerCase())
     );
   };
-
 
   return (<>
     {contacts.isLoading && <p className={css.loading}> Loading... </p>}
