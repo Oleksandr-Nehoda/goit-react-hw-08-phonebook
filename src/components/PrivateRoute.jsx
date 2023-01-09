@@ -8,8 +8,11 @@ export const PrivateRoute = ({ children }) => {
 
     const isLoggedin = useSelector(selectIsLoggedIn);
     const isRefreshing = useSelector(selectIsRefreshing);
+    console.log(`isLoggedin`, isLoggedin );
+    console.log(`isRefreshing`, isRefreshing );
 
     if (!isLoggedin && !isRefreshing) {
+        console.log(`Відпрацьовує if`, isLoggedin, isRefreshing )
         return <Navigate to='/login' />
     }
     return children

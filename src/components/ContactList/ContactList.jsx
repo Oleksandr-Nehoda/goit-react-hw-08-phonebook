@@ -15,12 +15,13 @@ export const ContactList = () => {
   // Redux отримуєм з сервера дані
   const contacts = useSelector(getContacts);
 
+
   const onFilter = useSelector(getFilter);
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if(isLoggedIn) {
       dispatch(fetchContacts())
     }
 }, [dispatch, isLoggedIn])
